@@ -6,6 +6,7 @@ var modalthresholds = [];
 var flag = true;
 var urlname = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')+1);
 document.getElementById("modal").style.display = "none";
+var elementArr = document.getElementsByClassName("clip");
 setInterval(() => {
     height = window.innerHeight;
     width = window.innerWidth;
@@ -13,12 +14,10 @@ setInterval(() => {
     widthavg = (window.innerWidth - 1000) / 2;
     modalthresholds = [heightavg, height - heightavg, widthavg, width - widthavg]
 }, 60);
-var elementArr = document.getElementsByClassName("clip");
 for (var i = 0; i < elementArr.length; i++) {
     var videosource = elementArr[i].childNodes[1].childNodes[1].getAttribute("src");
-    console.log(elementArr[i].childNodes[1].childNodes[7].setAttribute("onclick","copy('" + videosource + "')"));   
+    elementArr[i].childNodes[1].childNodes[7].setAttribute("onclick","copy('" + videosource + "')");   
     elementArr[i].setAttribute("onclick", "open_modal('" + videosource + "')");
-    console.log(elementArr[i].getAttribute("onclick"));
 }
 document.addEventListener("click", function(e) {
     if (document.getElementById("modal").style.display === "flex") {
@@ -33,7 +32,6 @@ function exit_modal(){
 }
 function open_modal(videosrc) {
     if (flag) {
-        console.log(videosrc, "open")
         document.querySelector(".player").setAttribute("src", videosrc);
         setTimeout(() => {
             document.getElementById("modal").style.display = "flex";
