@@ -28,10 +28,13 @@ a:link, a:visited{
     text-decoration: none;
 }
 .date{
+    position: absolute;
     color: #bbb;
     font-size: 12px;
     margin: 0;
     user-select: none;
+    bottom: 10px;
+    left: 10px;
 }
 #content-wrapper{
     display:flex;
