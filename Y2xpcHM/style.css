@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&family=Spline+Sans:wght@500&display=swap');
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+}
+
+#header {
+    font-size:40px;
+    padding-top: calc(3ch + 10px);
+    padding-left: calc(3ch + 10px);
+}
+h1 {
+    color: #eee;
+    font-family: 'Roboto Mono', monospace;
+    font-size:40px;
+    margin:0;
+}
+p {
+    color: #eee;
+    font-family: 'Spline Sans', sans-serif;
+    font-size: 18px;
+    padding-left: 0px;
+    margin-top: 10px;
+}
+a:link, a:visited{
+    text-decoration: none;
+}
+.date{
+    color: #bbb;
+    font-size: 12px;
+    margin: 0;
+}
+#content-wrapper{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    justify-content: flex-start;
+    padding: 3ch;
+    margin: 40px;
+}
+video{
+    border-radius: 15px;
+}
+.clip {
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+    margin: 10px;
+    width: 300px;
+    background-color: #141414;
+    cursor: pointer;
+    border-color: #eee;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 15px;
+    transition-duration: 1s;
+}
+.clip:hover {
+    transform: scale(1.1);
+}
+.clip:active {
+    transform: scale(1.05);
+}
