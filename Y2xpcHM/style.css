@@ -111,6 +111,7 @@ button{
     bottom: 10px;
     background-color: rgba(0,0,0,0);
     border-style: none;
+    user-select: none;
 }
 button:active {
     transform: scale(0.9);
