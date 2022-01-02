@@ -34,7 +34,7 @@ function open_modal(videosrc) {
 
 
 function copy(videosrc) {
-    var urlstring = urlname + escape(videosrc);
+    var urlstring = "kennytheeggman.github.io/" + urlname + escape(videosrc);
     console.log(urlstring)
     navigator.clipboard.writeText(urlstring);
     set_flag();
