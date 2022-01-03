@@ -61,8 +61,8 @@ setInterval(() => {                                                             
 }, 60);
 document.addEventListener("click", function(e) {                                                    //  When modal is active
     if ((document.getElementById("modal").style.display === "flex") && (                            // If click is outside modal_window
-        e.pageY < modalthresholds[0] || e.pageY > modalthresholds[1] ||
-        e.pageX < modalthresholds[2] || e.pageX > modalthresholds[3])) {
+        e.clientY < modalthresholds[0] || e.clientY > modalthresholds[1] ||
+        e.clientX < modalthresholds[2] || e.clientX > modalthresholds[3])) {
             exit_modal();                                                                           // Exit modal
     }
 });
