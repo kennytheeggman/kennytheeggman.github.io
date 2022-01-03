@@ -26,7 +26,7 @@ p {
     padding-left: 0px;
     margin-top: 10px;
 }
-.date{
+.date {
     position: absolute;                                                                                                     /* Align to bottom left */
     bottom: 10px;
     left: 10px;                                                                                                             /* */
@@ -41,7 +41,7 @@ img {
     padding: 0;
     margin: 0;
 }
-button{
+button {
     position: absolute;                                                                                                     /* Align bottom right */
     right: 10px;
     bottom: 10px;                                                                                                           /* */
@@ -55,7 +55,7 @@ button:active {
     transform: scale(0.9);
 }
 /* Clips */
-#content-wrapper{
+#content-wrapper {
     display:flex;                                                                                                           /* Clips aligned left to right top to bottom */
     flex-direction: row;
     flex-wrap:wrap;
@@ -63,7 +63,7 @@ button:active {
     padding: 3ch;
     margin: 40px;
 }
-video{
+video {
     border-radius: 15px;
     user-select: none;
 }
@@ -87,7 +87,7 @@ video{
     transform: scale(1.05);                                                                                                 /* Decrease size on click */
 }
 /* Modal Window */
-.modal{
+.modal {
     display: flex;                                                                                                          /* Center div */
     justify-content: center;
     align-items: center;                                                                                                    /* */
@@ -99,7 +99,7 @@ video{
     margin: 0;
     padding: 0;
 }
-.modal_window{
+.modal_window {
     display: flex;                                                                                                          /* Center div */
     justify-content: center;
     align-items: center;                                                                                                    /* */

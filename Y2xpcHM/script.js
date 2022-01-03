@@ -70,8 +70,3 @@ document.addEventListener("click", function(e) {                                
             exit_modal();                                                                           // Exit modal
     }
 });
-document.addEventListener("keypress", (e) => {
-    if ((document.getElementById("modal").style.display === "flex") && (e.keyCode == 27)) {         // Exit modal if escape is pressed
-        exit_modal();
-    }
-})
