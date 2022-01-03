@@ -1,9 +1,7 @@
 // Global Variables
-var height = 0, width = 0, heightavg = 0, widthavg = 0, modalthresholds = [];                       // Variables for modal exit point thresholds
+var height, width, heightavg, widthavg, modalthresholds;                       // Variables for modal exit point thresholds
 var flag = true;                                                                                    // Allow modal open flag (false when clicking copy button)
-
 var urlname = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')+1);   // Path to index.html URI
-var elementArr = document.getElementsByClassName("clip");                                           // Array of all clip elements
 // Function Declaration
 function exit_modal(){
     document.getElementById("modal").style.display = "none";                                        // Sets modal to invisible
@@ -19,12 +17,10 @@ function open_modal(videosrc) {
     }
 }
 function copy(videosrc) {
-    var urlstring = "https://kennytheeggman.github.io/" + urlname + escape(videosrc);               // Add github prefix and path to clip suffix
-    navigator.clipboard.writeText(urlstring);                                                       // Write URL to clipboard
-    set_flag();                                                                                     // When copying, set open modal flag to be false
+    navigator.clipboard.writeText("https://kennytheeggman.github.io/Y2xpcHM/" + escape(videosrc));  // Write URL to clipboard
+    set_flag(false);                                                                                // When copying, set open modal flag to be false
 }
-function set_flag() { flag = false; }
-function unset_flag() { flag = true; }
+function set_flag(val) { flag = val; }
 function add_clip(videosrc, date, clipname) {
     var datestr = date.slice(0, 4) + "/" + date.slice(4, 6) + "/" + date.slice(6);
     var content = document.getElementById("content-wrapper");                                       // Find content wrapper HTML DOM
@@ -34,23 +30,23 @@ function add_clip(videosrc, date, clipname) {
             clipel.appendChild(video);
             var p1 = document.createElement("p");                                                   // Create paragraph element, child of UL
             clipel.appendChild(p1);                                                 
-            var p2 = document.createElement("p");                                                   // Create paragraph element, child of UL
-            clipel.appendChild(p2);
+            var date = document.createElement("p");                                                 // Create paragraph element, child of UL
+            clipel.appendChild(date);
             var button = document.createElement("button");                                          // Create button element, child of UL
             clipel.appendChild(button);
-                var buttonicon = document.createElement("img");                                     // Create img element, child of button
-                button.appendChild(buttonicon);
+                var icon = document.createElement("img");                                           // Create img element, child of button
+                button.appendChild(icon);
     clipel.setAttribute("class", "clip");                                                           // Set clip methods
     clipel.setAttribute("onclick", "open_modal('" + videosrc + "')");
     p1.innerHTML = clipname;                                                                        // Set paragraph content
-    p2.setAttribute("class", "date");                                                               // Set date attributes
-    p2.innerHTML = datestr;
+    date.setAttribute("class", "date");                                                             // Set date attributes
+    date.innerHTML = datestr;
     video.setAttribute("src", videosrc);                                                            // Set video attributes
     video.setAttribute("width", "300");
     video.setAttribute("height", "168");
     button.setAttribute("onclick", "copy('" + videosrc + "')");                                     // Set button methods
-    button.setAttribute("onmouseleave", "unset_flag()");                                            
-    buttonicon.src = "copybutton.svg";                                                              // Set button icon
+    button.setAttribute("onmouseleave", "set_flag(true)");
+    icon.src = "copybutton.svg";                                                                    // Set button icon
 }
 // Initialize Site
 document.getElementById("modal").style.display = "none";                                            // Set modal to be invisible at site intialization        

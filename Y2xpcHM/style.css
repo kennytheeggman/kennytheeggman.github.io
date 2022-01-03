@@ -88,7 +88,7 @@ video {
 }
 /* Modal Window */
 .modal {
-    display: flex;                                                                                                          /* Center div */
+    display: none;                                                                                                          /* Center div */
     justify-content: center;
     align-items: center;                                                                                                    /* */
     position: fixed;
