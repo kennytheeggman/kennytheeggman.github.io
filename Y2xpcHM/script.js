@@ -1,6 +1,7 @@
 // Global Variables
 var height = 0, width = 0, heightavg = 0, widthavg = 0, modalthresholds = [];                       // Variables for modal exit point thresholds
 var flag = true;                                                                                    // Allow modal open flag (false when clicking copy button)
+
 var urlname = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')+1);   // Path to index.html URI
 var elementArr = document.getElementsByClassName("clip");                                           // Array of all clip elements
 // Function Declaration
@@ -24,12 +25,44 @@ function copy(videosrc) {
 }
 function set_flag() { flag = false; }
 function unset_flag() { flag = true; }
+function add_clip(videosrc, date, clipname) {
+    var datestr = date.slice(0, 4) + "/" + date.slice(4, 6) + "/" + date.slice(6);
+    var content = document.getElementById("content-wrapper");
+        var clipel = document.createElement("ul");
+            var p1 = document.createElement("p");
+            var p2 = document.createElement("p");
+            var video = document.createElement("video");
+            var button = document.createElement("button");
+                var buttonicon = document.createElement("img");
+    clipel.setAttribute("class", "clip");
+    clipel.setAttribute("onclick", "open_modal('" + videosrc + "')");
+
+    p1.innerHTML = clipname;
+
+    p2.setAttribute("class", "date");
+    p2.innerHTML = datestr;
+
+    video.setAttribute("src", videosrc);
+    video.setAttribute("width", "300");
+    video.setAttribute("height", "168");
+
+    button.setAttribute("onclick", "copy('" + videosrc + "')");
+    button.setAttribute("onmouseleave", "unset_flag()");
+
+    buttonicon.src = "copybutton.svg";
+
+    content.appendChild(clipel);
+    clipel.appendChild(video);
+    clipel.appendChild(p1);
+    clipel.appendChild(p2);
+    clipel.appendChild(button);
+    button.appendChild(buttonicon);
+}
 // Initialize Site
 document.getElementById("modal").style.display = "none";                                            // Set modal to be invisible at site intialization
-for (var i = 0; i < elementArr.length; i++) {                                                       // Loop through all clips
-    var videosource = elementArr[i].childNodes[1].childNodes[1].getAttribute("src");                // Get video source
-    elementArr[i].childNodes[1].childNodes[7].setAttribute("onclick","copy('" + videosource + "')");// Set copy video source 
-    elementArr[i].setAttribute("onclick", "open_modal('" + videosource + "')");                     //  Set modal video source
+                 
+for (var i = clips.length - 1; i >= 0; i--) {
+    add_clip(clips[i][0], clips[i][1], clips[i][2]);
 }
 // Continuous Scripts
 setInterval(() => {                                                                                 // Recalculate modal thresholds in case of window resize
@@ -41,6 +74,6 @@ document.addEventListener("click", function(e) {                                
     if ((document.getElementById("modal").style.display === "flex") && (                            // If click is outside modal_window
         e.pageY < modalthresholds[0] || e.pageY > modalthresholds[1] ||
         e.pageX < modalthresholds[2] || e.pageX > modalthresholds[3])) {
-        exit_modal();                                                                               // Exit modal
+            exit_modal();                                                                               // Exit modal
     }
 });
