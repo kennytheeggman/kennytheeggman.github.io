@@ -27,40 +27,33 @@ function set_flag() { flag = false; }
 function unset_flag() { flag = true; }
 function add_clip(videosrc, date, clipname) {
     var datestr = date.slice(0, 4) + "/" + date.slice(4, 6) + "/" + date.slice(6);
-    var content = document.getElementById("content-wrapper");
-        var clipel = document.createElement("ul");
-            var p1 = document.createElement("p");
-            var p2 = document.createElement("p");
-            var video = document.createElement("video");
-            var button = document.createElement("button");
-                var buttonicon = document.createElement("img");
-    clipel.setAttribute("class", "clip");
+    var content = document.getElementById("content-wrapper");                                       // Find content wrapper HTML DOM
+        var clipel = document.createElement("ul");                                                  // Create UL Element
+        content.appendChild(clipel);
+            var video = document.createElement("video");                                            // Create video element, child of UL
+            clipel.appendChild(video);
+            var p1 = document.createElement("p");                                                   // Create paragraph element, child of UL
+            clipel.appendChild(p1);                                                 
+            var p2 = document.createElement("p");                                                   // Create paragraph element, child of UL
+            clipel.appendChild(p2);
+            var button = document.createElement("button");                                          // Create button element, child of UL
+            clipel.appendChild(button);
+                var buttonicon = document.createElement("img");                                     // Create img element, child of button
+                button.appendChild(buttonicon);
+    clipel.setAttribute("class", "clip");                                                           // Set clip methods
     clipel.setAttribute("onclick", "open_modal('" + videosrc + "')");
-
-    p1.innerHTML = clipname;
-
-    p2.setAttribute("class", "date");
+    p1.innerHTML = clipname;                                                                        // Set paragraph content
+    p2.setAttribute("class", "date");                                                               // Set date attributes
     p2.innerHTML = datestr;
-
-    video.setAttribute("src", videosrc);
+    video.setAttribute("src", videosrc);                                                            // Set video attributes
     video.setAttribute("width", "300");
     video.setAttribute("height", "168");
-
-    button.setAttribute("onclick", "copy('" + videosrc + "')");
-    button.setAttribute("onmouseleave", "unset_flag()");
-
-    buttonicon.src = "copybutton.svg";
-
-    content.appendChild(clipel);
-    clipel.appendChild(video);
-    clipel.appendChild(p1);
-    clipel.appendChild(p2);
-    clipel.appendChild(button);
-    button.appendChild(buttonicon);
+    button.setAttribute("onclick", "copy('" + videosrc + "')");                                     // Set button methods
+    button.setAttribute("onmouseleave", "unset_flag()");                                            
+    buttonicon.src = "copybutton.svg";                                                              // Set button icon
 }
 // Initialize Site
-document.getElementById("modal").style.display = "none";                                            // Set modal to be invisible at site intialization
-                 
+document.getElementById("modal").style.display = "none";                                            // Set modal to be invisible at site intialization        
 for (var i = clips.length - 1; i >= 0; i--) {
     add_clip(clips[i][0], clips[i][1], clips[i][2]);
 }
@@ -74,6 +67,11 @@ document.addEventListener("click", function(e) {                                
     if ((document.getElementById("modal").style.display === "flex") && (                            // If click is outside modal_window
         e.pageY < modalthresholds[0] || e.pageY > modalthresholds[1] ||
         e.pageX < modalthresholds[2] || e.pageX > modalthresholds[3])) {
-            exit_modal();                                                                               // Exit modal
+            exit_modal();                                                                           // Exit modal
     }
 });
+document.addEventListener("keypress", (e) => {
+    if ((document.getElementById("modal").style.display === "flex") && (e.keyCode == 27)) {         // Exit modal if escape is pressed
+        exit_modal();
+    }
+})
