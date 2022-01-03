@@ -6,22 +6,22 @@ function exit_modal(){
     document.getElementById("modal").style.display = "none";                                        // Sets modal to invisible
     document.querySelector(".player").pause();                                                      // Pause player
 }
-function open_modal(videosrc) {
+function open_modal(src) {
     if (flag) {
-        document.querySelector(".player").setAttribute("src", videosrc);                            // Set player source to be clipped video
+        document.querySelector(".player").setAttribute("src", src);                                 // Set player source to be clipped video
         setTimeout(() => {                                                                          // This only works after a 10 millisecond delay
             document.getElementById("modal").style.display = "flex"; 
             document.querySelector(".player").play();
         }, 10);
     }
 }
-function copy(videosrc) {
-    navigator.clipboard.writeText("https://kennytheeggman.github.io/Y2xpcHM/" + escape(videosrc));  // Write URL to clipboard
+function copy(src) {
+    navigator.clipboard.writeText("https://kennytheeggman.github.io/Y2xpcHM/" + escape(src));       // Write URL to clipboard
     set_flag(false);                                                                                // When copying, set open modal flag to be false
 }
 function set_flag(val) { flag = val; }
-function add_clip(videosrc, date, clipname) {
-    var datestr = date.slice(0, 4) + "/" + date.slice(4, 6) + "/" + date.slice(6);
+function add_clip(src, time, name) {
+    var timestr = time.slice(0, 4) + "/" + time.slice(4, 6) + "/" + time.slice(6);
     var content = document.getElementById("content-wrapper");                                       // Find content wrapper HTML DOM
         var clipel = document.createElement("ul");          content.appendChild(clipel);            // Create UL Element
             var video = document.createElement("video");    clipel.appendChild(video);              // Create video element, child of UL
@@ -30,14 +30,14 @@ function add_clip(videosrc, date, clipname) {
             var button = document.createElement("button");  clipel.appendChild(button);             // Create button element, child of UL
                 var icon = document.createElement("img");   button.appendChild(icon);               // Create img element, child of button
     clipel.setAttribute("class", "clip");                                                           // Set clip methods
-    clipel.setAttribute("onclick", "open_modal('" + videosrc + "')");
-    p1.innerHTML = clipname;                                                                        // Set paragraph content
+    clipel.setAttribute("onclick", "open_modal('" + src + "')");
+    p1.innerHTML = name;                                                                            // Set paragraph content
     date.setAttribute("class", "date");                                                             // Set date attributes
-    date.innerHTML = datestr;
-    video.setAttribute("src", videosrc);                                                            // Set video attributes
+    date.innerHTML = timestr;
+    video.setAttribute("src", src);                                                                 // Set video attributes
     video.setAttribute("width", "300");
     video.setAttribute("height", "168");
-    button.setAttribute("onclick", "copy('" + videosrc + "')");                                     // Set button methods
+    button.setAttribute("onclick", "copy('" + src + "')");                                          // Set button methods
     button.setAttribute("onmouseleave", "set_flag(true)");
     icon.src = "copybutton.svg";                                                                    // Set button icon
 }
