@@ -1,15 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&family=Spline+Sans:wght@500&display=swap');
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&family=Spline+Sans:wght@500&display=swap');      /* Roboto Mono and Spline Sans */
+/* Body*/
 body {
+    background-color: #333;                                                                                               /* Dark gray background color */
     margin: 0;
     padding: 0;
-    background-color: #333;
 }
-
+/* Header */
 #header {
     font-size:40px;
-    padding-top: calc(3ch + 10px);
-    padding-left: calc(3ch + 10px);
-    z-index: 10;
+    padding-top: calc(3ch + 10px);                                                                                          /* Align with clips */
+    padding-left: calc(3ch + 10px);                                                                                         /* */
 }
 h1 {
     color: #eee;
@@ -17,6 +18,7 @@ h1 {
     font-size:40px;
     margin:0;
 }
+/* Clip Captions */
 p {
     color: #eee;
     font-family: 'Spline Sans', sans-serif;
@@ -24,23 +26,40 @@ p {
     padding-left: 0px;
     margin-top: 10px;
 }
-a:link, a:visited{
-    text-decoration: none;
-}
 .date{
-    position: absolute;
+    position: absolute;                                                                                                     /* Align to bottom left */
+    bottom: 10px;
+    left: 10px;                                                                                                             /* */
     color: #bbb;
     font-size: 12px;
     margin: 0;
     user-select: none;
-    bottom: 10px;
-    left: 10px;
 }
+svg {
+    height: 20px;                                                                                                           /* Force 20 px square */
+    width: 20px;                                                                                                            /* */
+    padding: 0;
+    margin: 0;
+}
+button{
+    position: absolute;                                                                                                     /* Align bottom right */
+    right: 10px;
+    bottom: 10px;                                                                                                           /* */
+    background-color: rgba(0,0,0,0);
+    border-style: none;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+}
+button:active {
+    transform: scale(0.9);
+}
+/* Clips */
 #content-wrapper{
-    display:flex;
+    display:flex;                                                                                                           /* Clips aligned left to right top to bottom */
     flex-direction: row;
     flex-wrap:wrap;
-    justify-content: flex-start;
+    justify-content: flex-start;                                                                                            /* */
     padding: 3ch;
     margin: 40px;
 }
@@ -49,73 +68,46 @@ video{
     user-select: none;
 }
 .clip {
-    padding: 10px;
-    overflow: hidden;
     position: relative;
-    margin: 10px;
+    overflow: hidden;
     width: 300px;
     background-color: #141414;
-    cursor: pointer;
-    border-color: #000;
-    border-style: solid;
-    border-width: 1px;
+    border: 1px solid #000;                                                                                               /* Border */
     border-radius: 15px;
+    cursor: pointer;
     transition-duration: 1s;
+    padding: 10px;
+    margin: 10px;
     user-select: none;
 }
 .clip:hover {
-    transform: scale(1.1);
+    transform: scale(1.1);                                                                                                  /* Increase size on hover */
 }
 .clip:active {
-    transform: scale(1.05);
+    transform: scale(1.05);                                                                                                 /* Decrease size on click */
 }
-
+/* Modal Window */
 .modal{
-    display: flex;
+    display: flex;                                                                                                          /* Center div */
+    justify-content: center;
+    align-items: center;                                                                                                    /* */
     position: fixed;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    justify-content: center;
-    align-items: center;
     margin: 0;
     padding: 0;
 }
 .modal_window{
-    display: flex;
+    display: flex;                                                                                                          /* Center div */
+    justify-content: center;
+    align-items: center;                                                                                                    /* */
+    overflow: hidden;
     background-color: #333;
     border-radius: 15px;
-    opacity: 1;
     width: 1000;
     padding: 0;
     margin: 0;
-    overflow: hidden;
-    justify-content: center;
-    align-items: center;
     user-select: none;
-}
-.player {
-    margin: 0;
-    padding: 0;
-    user-select: none;
-}
-svg {
-    height: 20px;
-    width: 20px;
-    padding: 0;
-    margin: 0;
-}
-button{
-    position: absolute;
-    padding: 0;
-    margin: 0;
-    right: 10px;
-    bottom: 10px;
-    background-color: rgba(0,0,0,0);
-    border-style: none;
-    user-select: none;
-}
-button:active {
-    transform: scale(0.9);
 }
