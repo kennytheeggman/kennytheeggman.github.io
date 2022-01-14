@@ -40,5 +40,5 @@ var clips = [
     ["20220112/celena cant do math pt. 3 2022-01-12.mp4", "20220112", "celena cant do math pt. 3"],
     ["20220114/pistol round 4k!! 2022-01-14.mp4", "20220114", "pistol round 4k!!"],
     ["20220114/tiffany cypher ace!! 2022-01-14.mp4", "20220114", "tiffany cypher ace!!"],
-    ["20220114/vic pop off ace 2022-01-14.mp4", "20220114", "OTTER ACE!!!!!"],
+    ["20220114/vic pop off ace 2022-01-14.mp4", "20220114", "OTTER ACE!!!!!"]
 ]
