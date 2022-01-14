@@ -29,5 +29,16 @@ var clips = [
     ["20220101/amy x enemy sage.mp4", "20220101", "amy x enemy sage"],
     ["20220101/literal chaos. amy clutch + sage wall outplay.mp4", "20220101", "literal chaos. amy clutch + sage wall outplay.mp4"],
     ["20220101/failed run and gun + 3rd clutch in a row.mp4", "20220101", "failed run and gun + 3rd clutch in a row"],
-    ["20220101/sage is throwing reported.mp4", "20220101", "sage is throwing reported"]
+    ["20220101/sage is throwing reported.mp4", "20220101", "sage is throwing reported"],
+    ["20220103/celena cant do math pt. 2 2022-01-03.mp4", "20220103", "celena cant do math pt. 2"],
+    ["20220103/jman oni chan 2022-01-03.mp4", "20220103", "jman oni chan caught in 360p resolution"],
+    ["20220107/1v3 clutch against sweaty ppl 2022-01-07.mp4", "20220107", "1v3 clutch against sweaty ppl"],
+    ["20220110/crazy collat 2022-01-10.mp4", "20220110", "crazy collat"],
+    ["20220111/1v4 clutch against sweaty people 2022-01-11.mp4", "20220111", "1v4 clutch against sweaty people"],
+    ["20220111/trip kill ft amy kj setup 2022-01-11.mp4", "20220111", "trip kill ft amy kj setup"],
+    ["20220111/watch the killfeed 2022-01-11.mp4", "20220111", "watch the killfeed"],
+    ["20220112/celena cant do math pt. 3 2022-01-12.mp4", "20220112", "celena cant do math pt. 3"],
+    ["20220114/pistol round 4k!! 2022-01-14.mp4", "20220114", "pistol round 4k!!"],
+    ["20220114/tiffany cypher ace!! 2022-01-14.mp4", "20220114", "tiffany cypher ace!!"],
+    ["20220114/vic pop off ace 2022-01-14.mp4", "20220114", "OTTER ACE!!!!!"],
 ]

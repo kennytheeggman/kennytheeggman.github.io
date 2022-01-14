@@ -2,7 +2,7 @@
 var height, width, modalthresholds;                                                                 // Variables for modal exit point thresholds
 var flag = true;                                                                                    // Allow modal open flag (false when clicking copy button)
 // Function Declaration
-function exit_modal(){
+function exit_modal() {
     document.getElementById("modal").style.display = "none";                                        // Sets modal to invisible
     document.querySelector(".player").pause();                                                      // Pause player
 }
@@ -51,7 +51,7 @@ setInterval(() => {                                                             
     height = window.innerHeight, width = window.innerWidth;
     modalthresholds = [width / 2 - 500, width / 2 + 500, height / 2 - 281, height / 2 + 281];
 }, 60);
-document.addEventListener("click", function(e) {                                                    // When modal is active
+document.addEventListener("click", (e) => {                                                    // When modal is active
     if ((document.getElementById("modal").style.display === "flex") && (                            // If click is outside modal_window
         e.clientX < modalthresholds[0] - 10 || e.clientX > modalthresholds[1] + 10 ||               // Margin buffer increase
         e.clientY < modalthresholds[2] - 10 || e.clientY > modalthresholds[3] + 10 )) {
