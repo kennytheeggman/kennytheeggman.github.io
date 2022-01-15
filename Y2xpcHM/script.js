@@ -47,7 +47,7 @@ function add_clip(src, time, name, thumbnailsrc) {
 // Initialize Site
 document.getElementById("modal").style.display = "none";                                            // Set modal to be invisible at site intialization        
 for (var i = clips.length - 1; i >= 0; i--) {
-    add_clip(clips[i][0], clips[i][1], clips[i][2], clips[i][3]);
+    add_clip("Clips/" + clips[i][0], clips[i][1], clips[i][2], "Clips/" + clips[i][3]);
 }
 // Continuous Scripts
 setInterval(() => {                                                                                 // Recalculate modal thresholds in case of window resize
