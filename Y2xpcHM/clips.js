@@ -38,6 +38,7 @@ var clips = [
     ["20220111/trip kill ft amy kj setup.mp4", "20220111", "trip kill ft amy kj setup"],
     ["20220111/watch the killfeed.mp4", "20220111", "watch the killfeed"],
     ["20220112/celena cant do math pt. 3.mp4", "20220112", "celena cant do math pt. 3"],
+    ["20220112/oni chan amyallen moment.mp4", "20220112", "oni chan amyallen moment"],
     ["20220114/pistol round 4k!!.mp4", "20220114", "pistol round 4k!!"],
     ["20220114/tiffany cypher ace!!.mp4", "20220114", "tiffany cypher ace!!"],
     ["20220114/vic pop off ace.mp4", "20220114", "OTTER ACE!!!!!"]
