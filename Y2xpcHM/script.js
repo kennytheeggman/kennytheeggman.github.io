@@ -20,11 +20,12 @@ function copy(src) {
     set_flag(false);                                                                                // When copying, set open modal flag to be false
 }
 function set_flag(val) { flag = val; }
-function add_clip(src, time, name) {
+function add_clip(src, time, name, thumbnailsrc) {
+    console.log(thumbnailsrc);
     var timestr = time.slice(0, 4) + "/" + time.slice(4, 6) + "/" + time.slice(6);
     var content = document.getElementById("content-wrapper");                                       // Find content wrapper HTML DOM
         var clipel = document.createElement("ul");          content.appendChild(clipel);            // Create UL Element
-            var video = document.createElement("video");    clipel.appendChild(video);              // Create video element, child of UL
+            var thumbnail = document.createElement("img");  clipel.appendChild(thumbnail);          // Create video element, child of UL
             var p1 = document.createElement("p");           clipel.appendChild(p1);                 // Create paragraph element, child of UL
             var date = document.createElement("p");         clipel.appendChild(date);               // Create paragraph element, child of UL
             var button = document.createElement("button");  clipel.appendChild(button);             // Create button element, child of UL
@@ -34,17 +35,19 @@ function add_clip(src, time, name) {
     p1.innerHTML = name;                                                                            // Set paragraph content
     date.setAttribute("class", "date");                                                             // Set date attributes
     date.innerHTML = timestr;
-    video.setAttribute("src", src);                                                                 // Set video attributes
-    video.setAttribute("width", "300");
-    video.setAttribute("height", "168");
+    thumbnail.setAttribute("src", thumbnailsrc);                                                    // Set thumbnail attributes
+    thumbnail.setAttribute("class", "video");
+    thumbnail.setAttribute("width", "300");
+    thumbnail.setAttribute("height", "168");
     button.setAttribute("onclick", "copy('" + src + "')");                                          // Set button methods
     button.setAttribute("onmouseleave", "set_flag(true)");
+    icon.setAttribute("class", "icon");
     icon.src = "copybutton.svg";                                                                    // Set button icon
 }
 // Initialize Site
 document.getElementById("modal").style.display = "none";                                            // Set modal to be invisible at site intialization        
 for (var i = clips.length - 1; i >= 0; i--) {
-    add_clip(clips[i][0], clips[i][1], clips[i][2]);
+    add_clip(clips[i][0], clips[i][1], clips[i][2], clips[i][3]);
 }
 // Continuous Scripts
 setInterval(() => {                                                                                 // Recalculate modal thresholds in case of window resize

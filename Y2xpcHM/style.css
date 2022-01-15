@@ -35,7 +35,7 @@ p {
     margin: 0;
     user-select: none;
 }
-img {
+.icon {
     height: 20px;                                                                                                           /* Force 20 px square */
     width: 20px;                                                                                                            /* */
     padding: 0;
@@ -64,6 +64,10 @@ button:active {
     margin: 40px;
 }
 video {
+    border-radius: 15px;
+    user-select: none;
+}
+img.video {
     border-radius: 15px;
     user-select: none;
 }
