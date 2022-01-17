@@ -1,5 +1,5 @@
 var clips = [
-    // video path, date, clip name
+    // video path, date, clip name, thumbnail path
     ["20211211/nathan head taps.mp4", "20211211", "nathan head taps", "20211211/nathan head taps thumb.png"],
     ["20211211/bk doesnt want the ace.mp4", "20211211", "bk doesnt want the ace", "20211211/bk doesnt want the ace thumb.png"],
     ["20211215/all skill no luck.mp4", "20211215", "all skill no luck", "20211215/all skill no luck thumb.png"],
@@ -41,5 +41,14 @@ var clips = [
     ["20220112/oni chan amyallen moment.mp4", "20220112", "oni chan amyallen moment", "20220112/oni chan amyallen moment thumb.png"],
     ["20220114/pistol round 4k!!.mp4", "20220114", "pistol round 4k!!", "20220114/pistol round 4k!! thumb.png"],
     ["20220114/tiffany cypher ace!!.mp4", "20220114", "tiffany cypher ace!!", "20220114/tiffany cypher ace!! thumb.png"],
-    ["20220114/vic pop off ace.mp4", "20220114", "OTTER ACE!!!!!", "20220114/vic pop off ace thumb.png"]
+    ["20220114/vic pop off ace.mp4", "20220114", "OTTER ACE!!!!!", "20220114/vic pop off ace thumb.png"],
+    ["20220114/allen sova main 2022-01-14.mp4", "20220114", "allen sova main", "20220114/allen sova main 2022-01-14 thumb.png"],
+    ["20220114/nasty flicks 2022-01-14.mp4", "20220114", "sorry sophia", "20220114/nasty flicks 2022-01-14 thumb.png"],
+    ["20220115/baiting for otter 2022-01-15.mp4", "20220115", "baiting for the otter ace", "20220115/baiting for otter 2022-01-15 thumb.png"],
+    ["20220115/im crazy 2022-01-15.mp4", "20220115", "im crazy", "20220115/im crazy 2022-01-15 thumb.png"],
+    ["20220116/ace to finish the game 2022-01-16.mp4", "20220116", "ace to finish the game", "20220116/ace to finish the game 2022-01-16 thumb.png"],
+    ["20220116/almost a 4k clutch 2022-01-16.mp4", "20220116", "almost a 4k clutch", "20220116/almost a 4k clutch 2022-01-16 thumb.png"],
+    ["20220116/deagle demon 2022-01-16.mp4", "20220116", "deagle demon", "20220116/deagle demon 2022-01-16 thumb.png"],
+    ["20220116/jman odin ace 2022-01-16.mp4", "20220116", "jman odin ace", "20220116/jman odin ace 2022-01-16 thumb.png"],
+    ["20220116/scuffed 9 3 curse 2022-01-16.mp4", "20220116", "scuffed 9 3 curse", "20220116/scuffed 9 3 curse 2022-01-16 thumb.png"]
 ]
