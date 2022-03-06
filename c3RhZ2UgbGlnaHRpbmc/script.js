@@ -863,7 +863,7 @@ setTimeout(() => {
     ctx.drawImage(download, 85, 50, 15, 15);
     ctx.drawImage(upload, 120, 50, 15, 15);
     ctx.drawImage(exp, 155, 50, 15, 15);
-}, 10);
+}, 100);
 
 
 setInterval(() => {
