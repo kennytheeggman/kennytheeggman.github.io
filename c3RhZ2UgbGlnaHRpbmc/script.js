@@ -583,6 +583,62 @@ function get_upload() {
     }
 }
 
+function create_t_list() {
+    var imap = [36, 35, 19, 20, 21, 22, 23, 24, 15, 16, 17, 18, 25, 27, 29, 31]
+    var cmap = [1, 1, 43, 44, 45, 46, 47, 48, 39, 40, 41, 42, 26, 28, 30, 32]
+    var exp_cue = []
+    for (var i = 0; i < times.length * 10; i++) {
+        var time = i * 20;
+        var temp_cue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        for (var j = 0; j < cues.length; j++) {
+            if (time + 50 < cues[j][1] && time + 50 > cues[j][0]) {
+                temp_cue[imap[cues[j][2] - 1] - 1] = cues[j][4];
+                temp_cue[cmap[cues[j][2] - 1] - 1] = cues[j][3];
+            }
+        }
+        exp_cue.push([i / 10, temp_cue])
+    }
+    var last_same_cue = 0;
+    var exp_cue_2 = []
+    function compare_list(arr1, arr2) {
+        if (arr1.length != arr2.length) {
+            return false;
+        }
+        else {
+            for (var i = 0; i < arr1.length; i++) {
+                if (arr1[i] != arr2[i]) {
+                    return false
+                }
+            }
+            return true
+        }
+    }
+    for (var i = 0; i < times.length * 10; i++) {
+        console.log(last_same_cue);
+        if (!compare_list(exp_cue[i][1], exp_cue[last_same_cue * 10][1])) {
+            exp_cue_2.push([last_same_cue, exp_cue[i][0], exp_cue[last_same_cue * 10][1]]);
+            last_same_cue = exp_cue[i][0]
+        }
+    }
+    exp_cue_2.push([last_same_cue, exp_cue[exp_cue.length - 1][0], exp_cue[last_same_cue * 10][1]]);
+    var return_string = "Start Time,End Time,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48\n";
+    for (var i = 0; i < exp_cue_2.length; i++) {
+        return_string += new String(exp_cue_2[i]) + "\n";
+    }
+    return return_string;
+}
+
+function exp() {
+    var fileContent = create_t_list();
+    // console.log(fileContent);
+    var bb = new Blob([fileContent]);
+    var a = document.createElement('a');
+    a.style.display = "none";
+    a.download = 'download.csv';
+    a.href = window.URL.createObjectURL(bb);
+    a.click();
+}
+
 window.AudioContext = window.AudioContext;
 var context = new window.AudioContext();
 var source;
@@ -594,7 +650,6 @@ function playSound(arraybuffer) {
         source.start(0);
     });
 }
-
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
     playFile(files[0]);
@@ -602,7 +657,6 @@ function handleFileSelect(evt) {
     t = 0;
     scrubber = 50;
 }
-
 function playFile(file) {
     var freader = new FileReader();
 
@@ -743,6 +797,9 @@ document.addEventListener("mousedown", (e) => {
     if (e.button == 0 && x >= 120 && x <= 135 && y <= 65 && y >= 50) {
         get_upload();
     }
+    if (e.button == 0 && x >= 155 && x <= 170 && y <= 65 && y >= 50) {
+        exp();
+    }
 });
 
 document.addEventListener("contextmenu", (e) => {
@@ -800,9 +857,12 @@ setTimeout(() => {
     download.src = "download.png";
     var upload = document.createElement("img");
     upload.src = "upload.png";
+    var exp = document.createElement("img");
+    exp.src = "export.png";
     ctx.drawImage(music, 50, 50, 15, 15);
     ctx.drawImage(download, 85, 50, 15, 15);
     ctx.drawImage(upload, 120, 50, 15, 15);
+    ctx.drawImage(exp, 155, 50, 15, 15);
 }, 10);
 
 
