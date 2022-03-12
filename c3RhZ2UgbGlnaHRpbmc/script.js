@@ -53,7 +53,6 @@ function draw_as() {
     ctx.rect(...key_rects[0]);
     ctx.stroke();
 }
-
 function draw_us() {
     last_style = ctx.strokeStyle;
     last_fill = ctx.fillStyle;
@@ -77,7 +76,6 @@ function draw_us() {
     ctx.stroke();
     ctx.fill();
 }
-
 function draw_st() {
     last_style = ctx.strokeStyle;
     last_fill = ctx.fillStyle;
@@ -90,7 +88,6 @@ function draw_st() {
     ctx.stroke();
     ctx.fill();
 }
-
 function draw_ls() {
     last_style = ctx.strokeStyle;
     last_fill = ctx.fillStyle;
@@ -126,7 +123,6 @@ function draw_stage() {
     draw_ls(); // Draw lower stage
     draw_lights();
 }
-
 function draw_bar() {
     ctx.beginPath();
     ctx.fillStyle = "#333";
@@ -165,7 +161,6 @@ function draw_bar() {
     ctx.rect(canvas.width - 65, canvas.height - 31, 12, 4);
     ctx.fill();
 }
-
 function draw_scrubber(x) {
     ctx.strokeStyle = "#009CE7";
     ctx.fillStyle = "#009CE7";
@@ -179,7 +174,6 @@ function draw_scrubber(x) {
     ctx.fill();
     ctx.stroke();
 }
-
 function draw_cues(current_tx, current_ty) {
     // console.log(cues);
     for (var i = 0; i < cues.length; i++) {
@@ -237,7 +231,6 @@ function draw_cues(current_tx, current_ty) {
         }
     }
 }
-
 function draw_lights() {
     dl = [
         (c, i) => { // US Wash
@@ -530,7 +523,7 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
     this.arcTo(x,   y,   x+w, y,   r);
     this.closePath();
     return this;
-  }
+}
 
 function show_gui(selected) {
     gui_open = true;
@@ -576,11 +569,13 @@ function get_upload() {
     var file = document.getElementById("input")
     file.click();
     // console.log(file.files)
-    var fr = new FileReader()
-    fr.readAsText(file.files[0]);
-    fr.onload = (e) => {
-        eval(fr.result);
-    }
+    file.addEventListener("change", () => {
+        var fr = new FileReader()
+        fr.readAsText(file.files[0]);
+        fr.onload = (e) => {
+            eval(fr.result);
+        }
+    });
 }
 
 function create_t_list() {
@@ -667,28 +662,6 @@ function playFile(file) {
     freader.readAsArrayBuffer(file);
 }
 document.getElementById('get_file').addEventListener('change', handleFileSelect, false);
-
-document.addEventListener("dblclick", (e) => {
-    // console.log("clicked");
-    var select = false;
-    for (var i = 0; i < cues.length; i++) {
-        x_lower = cues[i][0] - current_tx;
-        x_upper = cues[i][1] - current_tx;
-        y_lower = (cues[i][2] - 1) * 25 + 4 + canvas.height - 342 - current_ty - 3;
-        y_upper = (cues[i][2] - 1) * 25 + 4 + canvas.height - 342 - current_ty + 3;
-        console.log(x, y, ":", x_lower, x_upper, y_lower, y_upper);
-        // console.log(x_lower, x_upper, y_lower, y_upper)
-        if (x >= x_lower && x <= x_upper && y >= y_lower && y <= y_upper) {
-            select = true;
-            selected = i;
-            show_gui(selected);
-        }
-    }
-    if (!select) {
-        hide_gui();
-        selected = undefined;
-    }
-})
 
 document.addEventListener("mousemove", (event) => {
     x = event.offsetX;
@@ -801,11 +774,6 @@ document.addEventListener("mousedown", (e) => {
         exp();
     }
 });
-
-document.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-})
-
 document.addEventListener("mouseup", (e) => {
 
     changescrubber = false;
@@ -831,8 +799,8 @@ document.addEventListener("mouseup", (e) => {
         x = start_tx;
         start_tx = temp;
     }
-    start_time = Math.ceil(start_tx / 20) * 20 + current_tx;
-    end_time = Math.ceil(x / 20) * 20 + current_tx;
+    start_time = Math.ceil(start_tx / 20) * 20 - (current_tx % 20) - 10 + current_tx;
+    end_time = Math.ceil(x / 20) * 20 - (current_tx % 20) - 10 + current_tx;
     target_chan = - Math.round((canvas.height - 350 - start_ty - 12 - current_ty) / 25);
 
     // console.log(target_chan);
@@ -847,24 +815,43 @@ document.addEventListener("mouseup", (e) => {
     start_tx = 0;
     start_ty = 0;
 });
+document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+})
+document.addEventListener("dblclick", (e) => {
+    // console.log("clicked");
+    var select = false;
+    for (var i = 0; i < cues.length; i++) {
+        x_lower = cues[i][0] - current_tx;
+        x_upper = cues[i][1] - current_tx;
+        y_lower = (cues[i][2] - 1) * 25 + 4 + canvas.height - 342 - current_ty - 3;
+        y_upper = (cues[i][2] - 1) * 25 + 4 + canvas.height - 342 - current_ty + 3;
+        console.log(x, y, ":", x_lower, x_upper, y_lower, y_upper);
+        // console.log(x_lower, x_upper, y_lower, y_upper)
+        if (x >= x_lower && x <= x_upper && y >= y_lower && y <= y_upper) {
+            select = true;
+            selected = i;
+            show_gui(selected);
+        }
+    }
+    if (!select) {
+        hide_gui();
+        selected = undefined;
+    }
+})
 
 setTimeout(() => {
     ctx.fillStyle = "#333";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    var music = document.createElement("img");
-    music.src = "music.png";
-    var download = document.createElement("img");
-    download.src = "download.png";
-    var upload = document.createElement("img");
-    upload.src = "upload.png";
-    var exp = document.createElement("img");
-    exp.src = "export.png";
-    ctx.drawImage(music, 50, 50, 15, 15);
-    ctx.drawImage(download, 85, 50, 15, 15);
-    ctx.drawImage(upload, 120, 50, 15, 15);
-    ctx.drawImage(exp, 155, 50, 15, 15);
-}, 100);
-
+    var music = document.getElementById("music");
+    var download = document.getElementById("download");
+    var upload = document.getElementById("upload");
+    var exp = document.getElementById("export");
+    music.addEventListener("load", ctx.drawImage(music, 50, 50, 15, 15))
+    download.addEventListener("load", ctx.drawImage(download, 85, 50, 15, 15))
+    upload.addEventListener("load", ctx.drawImage(upload, 120, 50, 15, 15))
+    exp.addEventListener("load", ctx.drawImage(exp, 155, 50, 15, 15))
+}, 0);
 
 setInterval(() => {
     if (changescrubber && x > 50 && x < canvas.width - 50) {
@@ -959,17 +946,17 @@ setInterval(() => {
         ctx.lineWidth = 5;
         if (targetedchan * 25 - current_ty >= 0 && targetedchan * 25 - current_ty < 300) {
             if (x >= 50 && x <= canvas.width - 50) {
-                ctx.moveTo(Math.ceil(start_tx / 20) * 20, targetedchan * 25 + 12 + canvas.height - 350 - current_ty);
-                ctx.lineTo(Math.ceil(x / 20) * 20, targetedchan * 25 + 12 + canvas.height - 350 - current_ty);
+                ctx.moveTo(Math.ceil(start_tx / 20) * 20 - current_tx % 20 - 10, targetedchan * 25 + 12 + canvas.height - 350 - current_ty);
+                ctx.lineTo(Math.ceil(x / 20) * 20 - current_tx % 20 - 10, targetedchan * 25 + 12 + canvas.height - 350 - current_ty);
                 ctx.stroke();
             }
             else if (x < 50) {
-                ctx.moveTo(Math.ceil(start_tx / 20) * 20, targetedchan * 25 + 12 + canvas.height - 350 - current_ty);
+                ctx.moveTo(Math.ceil(start_tx / 20) * 20 - current_tx % 20 - 10, targetedchan * 25 + 12 + canvas.height - 350 - current_ty);
                 ctx.lineTo(50, targetedchan * 25 + 12 + canvas.height - 350 - current_ty);
                 ctx.stroke();
             }
             else {
-                ctx.moveTo(Math.ceil(start_tx / 20) * 20, targetedchan * 25 + 12 + canvas.height - 350 - current_ty);
+                ctx.moveTo(Math.ceil(start_tx / 20) * 20 - current_tx % 20 - 10, targetedchan * 25 + 12 + canvas.height - 350 - current_ty);
                 ctx.lineTo(canvas.width - 50, targetedchan * 25 + 12 + canvas.height - 350 - current_ty);
                 ctx.stroke();
             }
@@ -1028,8 +1015,3 @@ setInterval(() => {
         }
     }
 }, 10);
-
-// draw_stage();
-// draw_bar();
-// draw_scrubber(scrubber);
-// set_axes(0, 0);
