@@ -554,8 +554,13 @@ function get_download() {
         var current_str = "[" + new String(cues[i]) + "], "
         fileContent += current_str;
     }
-    fileContent += "[" + new String(cues[cues.length - 1]) + "]]";
-    // console.log(fileContent);
+    fileContent += "[" + new String(cues[cues.length - 1]) + "]]\ntimes = [";
+    for (var i = 0; i < times.length - 1; i++) {
+        var current_str = "\"" + new String(times[i]) + "\","
+        fileContent += current_str;
+    }
+    fileContent += "\"" + times[times.length - 1] + "\"]";
+    console.log(fileContent);
     var bb = new Blob([fileContent]);
     var a = document.createElement('a');
     a.style.display = "none";
@@ -573,7 +578,12 @@ function get_upload() {
         var fr = new FileReader()
         fr.readAsText(file.files[0]);
         fr.onload = (e) => {
-            eval(fr.result);
+            var a = fr.result
+            // console.log(a)
+            // var b = fr.result.split("\n")[1]
+            // console.log(b)
+            eval(a)
+            // eval(b)
         }
     });
 }
