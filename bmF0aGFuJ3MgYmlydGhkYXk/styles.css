@@ -1,0 +1,136 @@
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: xx-large;
+}
+
+input, button {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: larger;
+    user-select: none;
+    outline: none;
+    border: 1px solid black;
+    padding: 1vh;
+    border-radius: 1vh;
+    text-align: center;
+}
+
+input[type="text"] {
+    border-radius: 1vh 0vh 0vh 1vh;
+}
+
+input[type="button"] {
+    border-radius: 0vh 1vh 1vh 0vh;
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}
+
+div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#inputcontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+}
+table {
+    min-width: 50vw;
+    padding-top: 3vh;
+}
+th {
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-bottom: 1px solid black;
+    padding: 0.5vh;
+    min-width: 10vw;
+}
+td {
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0.5vh;
+}
+
+dialog {
+    border-radius: 1vh;
+    border: 1px solid black;
+    user-select: none;
+    outline: none;
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    font-size: medium;
+    cursor: pointer;
+    margin: 0vh;
+    padding: 0.5vh;
+    width: 100%;
+    height: auto;
+}
+p:hover {
+    background-color: #eee;
+}
+#fuzzycontainer {
+    height: 15vh;
+    justify-content: start;
+    flex-direction: column;
+}
+#fuzzy {
+    display: flex;
+    flex-direction: column;
+    align-content: baseline;
+    height: fit-content;
+    min-height: 4vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    top: 0;
+    width: 30vh;
+    border: 1px solid black;
+    border-radius: 1vh;
+    margin-top: 0.75vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 2vh;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;    
+    border-radius: 1vh;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 1vh;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
