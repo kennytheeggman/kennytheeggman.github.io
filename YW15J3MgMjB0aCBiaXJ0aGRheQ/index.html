@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            background: #f5f3ef;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+            letter-spacing: 0.15em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 16px;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .instructions {
+            max-width: 480px;
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-size: 0.88rem;
+        }
+
+        .status-bar {
+            padding: 10px 24px;
+            background: #fff;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .status-bar.complete {
+            background: #c8e6c9;
+            color: #2d7d46;
+        }
+
+        .game-area {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+        }
+
+        .board-wrapper {
+            display: flex;
+            gap: 3px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .col-stack {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 3px;
+        }
+
+        .cell {
+            width: 32px;
+            height: 32px;
+            background: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            transition: all 0.12s ease;
+            color: #1a1a1a;
+            border-radius: 3px;
+        }
+
+        .cell.empty {
+            background: #e8e8e8;
+            color: #d0d0d0;
+        }
+
+        .cell.filled {
+            background: #222;
+            color: #fff;
+        }
+        
+	.cell.correct {
+            background: #00AD83;
+            color: #fff;
+        }
+
+        .cell.preview {
+            background: #fff3e0;
+            color: #ff9800;
+            border: 2px dashed #ff9800;
+        }
+
+        .cell.missing {
+            background: transparent;
+            color: transparent;
+        }
+
+.sidebar {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+	    max-width: 100%;
+         }
+
+         .controls {
+             display: flex;
+             flex-direction: column;
+             gap: 10px;
+             align-items: center;
+         }
+
+        .word-item {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #fff;
+            border: 2px solid #222;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            transition: all 0.12s ease;
+        }
+
+        .word-item:hover {
+            background: #222;
+            color: #fff;
+        }
+
+        .word-item.selected {
+            background: #f9a825;
+            border-color: #f9a825;
+            color: #1a1a1a;
+        }
+
+        .word-item.used {
+            opacity: 0.2;
+            pointer-events: none;
+            border-color: #ccc;
+        }
+
+        .word-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .position-controls {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .pos-btn {
+            width: 36px;
+            height: 36px;
+            background: #fff;
+	    color: #222;
+            border: 2px solid #222;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.12s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pos-btn:hover {
+            background: #222;
+            color: #fff;
+        }
+
+        .pos-btn:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .action-area {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #555;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        button.confirm-btn {
+            background: #4caf50;
+        }
+
+        button.confirm-btn:hover {
+            background: #388e3c;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .hint-text {
+            font-size: 0.75rem;
+            color: #888;
+            text-align: center;
+            max-width: 130px;
+        }
+
+        .found-section {
+            margin-top: 28px;
+            text-align: center;
+        }
+
+        .found-section h3 {
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: normal;
+            font-size: 0.9rem;
+        }
+
+        .found-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            max-width: 320px;
+        }
+
+        .found-word {
+            padding: 4px 10px;
+            background: #c8e6c9;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #2d7d46;
+        }
+
+        .placed-section {
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .placed-section h3 {
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: normal;
+            font-size: 0.9rem;
+        }
+
+        .placed-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            max-width: 320px;
+        }
+
+        .placed-word {
+            padding: 4px 10px;
+            background: #e3f2fd;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1565c0;
+        }
+
+        .confetti {
+            position: fixed;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        #celebrationModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 48px 64px;
+            border-radius: 12px;
+            text-align: center;
+            animation: modalPop 0.4s ease;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content h2 {
+            font-size: 2.5rem;
+            color: #00AD83;
+            margin-bottom: 16px;
+            letter-spacing: 0.1em;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 24px;
+            font-size: 1.1rem;
+        }
+
+        .modal-close-btn {
+            padding: 12px 32px;
+            font-size: 1rem;
+            background: #222;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .modal-close-btn:hover {
+            background: #444;
+        }
+    </style>
+</head>
+<body>
+    <h1>STACKS</h1>
+    <p class="subtitle">by Kenny!</p>
+    <p class="instructions">
+        Select a word. Use <b>← →</b> to find next valid position. Each word must form a horizontal word.
+    </p>
+
+    <div class="word-list" id="wordList"></div>
+
+    <div class="game-area">
+        <div class="board-wrapper" id="board"></div>
+        
+        <div class="sidebar">
+            <div class="controls">
+                <div class="position-controls">
+                    <button class="pos-btn" id="prevBtn" onclick="movePrev()">←</button>
+                    <button class="pos-btn" id="nextBtn" onclick="moveNext()">→</button>
+                </div>
+                
+                <div class="action-area">
+                    <button id="confirmBtn" class="confirm-btn" onclick="confirmDrop()" disabled>Drop</button>
+                    <button id="undoBtn" onclick="undoMove()" disabled>Undo</button>
+                    <button onclick="resetGame()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function shuffle(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+            // Generate a random index between 0 and i
+            const j = Math.floor(Math.random() * (i + 1));
+            // Swap elements at i and j using destructuring assignment
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+          return array;
+        }
+
+        const COLS = 9;
+	const COL_HEIGHTS = [2, 5, 5, 6, 6, 7, 5, 3, 1];
+        const MAX_ROWS = 7;
+        const WORDS = shuffle(['DEPOSIT', 'SCANNED', 'TEES', 'ALIGN', 'DESISTS', 'HONEY', 'AMP']);
+	const ANSWERS = ['OPPOSITES', 'DECANTED', 'SALINES', 'DESIGN', 'HONEST', 'AMY', 'P'];
+	const INITIAL_LETTERS = {0: 'O', 1: 'P'};
+
+        let grid = [];
+        let placedWords = [];
+        let selectedWord = null;
+        let previewStartCol = 0;
+        let validPositions = [];
+        let previewPositions = [];
+        let placedWordRows = [];
+        let historyStack = [];
+
+        function getColHeight(col) {
+            return COL_HEIGHTS[col];
+        }
+
+        function initGame() {
+            grid = [];
+            for (let c = 0; c < COLS; c++) {
+                grid[c] = [];
+                const height = getColHeight(c);
+                for (let r = 0; r < height; r++) {
+                    grid[c][r] = null;
+                }
+		if (INITIAL_LETTERS[c]) {
+		    grid[c][0] = INITIAL_LETTERS[c];
+		}
+            }
+
+            placedWords = [];
+            selectedWord = null;
+            previewStartCol = 0;
+            validPositions = [];
+            previewPositions = [];
+            placedWordRows = [];
+            historyStack = [];
+
+            render();
+        }
+
+        function findValidPositions(word) {
+            const positions = [];
+            const letters = word.split('');
+            
+            for (let startCol = 0; startCol <= COLS - letters.length; startCol++) {
+                let canFit = true;
+                for (let i = 0; i < letters.length; i++) {
+                    const col = startCol + i;
+                    const lowestRow = findLowestEmptyRow(col);
+                    if (lowestRow === -1) {
+                        canFit = false;
+                        break;
+                    }
+                }
+                if (canFit) {
+                    positions.push(startCol);
+                }
+            }
+            
+            return positions;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (!selectedWord) return;
+            
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                movePrev();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                moveNext();
+            }
+        });
+
+        function movePrev() {
+            if (validPositions.length === 0) return;
+            
+            const currentIdx = validPositions.indexOf(previewStartCol);
+            const newIdx = currentIdx > 0 ? currentIdx - 1 : validPositions.length - 1;
+            previewStartCol = validPositions[newIdx];
+            updatePreview();
+        }
+
+        function moveNext() {
+            if (validPositions.length === 0) return;
+            
+            const currentIdx = validPositions.indexOf(previewStartCol);
+            const newIdx = currentIdx < validPositions.length - 1 ? currentIdx + 1 : 0;
+            previewStartCol = validPositions[newIdx];
+            updatePreview();
+        }
+
+        function updatePreview() {
+            if (!selectedWord) {
+                previewPositions = [];
+                render();
+                return;
+            }
+
+            const letters = selectedWord.split('');
+            
+            for (let i = 0; i < letters.length; i++) {
+                const c = previewStartCol + i;
+                const lowestRow = findLowestEmptyRow(c);
+                if (lowestRow === -1) {
+                    previewPositions = [];
+                    render();
+                    return;
+                }
+            }
+
+            previewPositions = [];
+
+            for (let i = 0; i < letters.length; i++) {
+                const c = previewStartCol + i;
+                const r = findLowestEmptyRow(c);
+                previewPositions.push({ col: c, row: r, letter: letters[i] });
+            }
+
+            render();
+        }
+
+	function isRowCorrect(row) {
+            let word = '';
+            for (let c = 0; c < COLS; c++) {
+		const letter = grid[c][row];
+		if (letter) {
+		    word += letter;
+		}
+            }
+            return ANSWERS[row] === word;
+	}
+
+        function render() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+
+            for (let c = 0; c < COLS; c++) {
+                const colEl = document.createElement('div');
+                colEl.className = 'column';
+
+                const stackEl = document.createElement('div');
+                stackEl.className = 'col-stack';
+
+                const height = getColHeight(c);
+                for (let r = 0; r < MAX_ROWS; r++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+
+                    if (r >= height) {
+                        cell.className += ' missing';
+                        cell.textContent = '';
+                    } else {
+                        const isPreview = previewPositions.some(p => p.col === c && p.row === r);
+                        
+                        if (isPreview) {
+                            cell.className += ' preview';
+                            const previewLetter = previewPositions.find(p => p.col === c && p.row === r);
+                            cell.textContent = previewLetter.letter;
+                        } else {
+                            const letter = grid[c][r];
+                            if (letter) {
+				if (isRowCorrect(r)) {
+				    cell.className += ' correct';
+				} else {
+				    cell.className += ' filled';
+				}
+                                cell.textContent = letter;
+                            } else {
+                                cell.className += ' empty';
+                                cell.textContent = '.';
+                            }
+                        }
+                    }
+
+                    stackEl.appendChild(cell);
+                }
+
+                colEl.appendChild(stackEl);
+                boardEl.appendChild(colEl);
+            }
+
+            const wordListEl = document.getElementById('wordList');
+            wordListEl.innerHTML = '';
+            const available = WORDS.filter(w => !placedWords.includes(w));
+            available.forEach(word => {
+                const item = document.createElement('div');
+                item.className = 'word-item';
+                item.textContent = word;
+
+                if (selectedWord === word) {
+                    item.className += ' selected';
+                }
+
+                item.onclick = (e) => {
+                    e.stopPropagation();
+                    selectWord(word);
+                };
+                wordListEl.appendChild(item);
+            });
+
+            placedWords.forEach(word => {
+                const item = document.createElement('div');
+                item.className = 'word-item used';
+                item.textContent = word;
+                wordListEl.appendChild(item);
+            });
+
+            const confirmBtn = document.getElementById('confirmBtn');
+            confirmBtn.disabled = previewPositions.length === 0;
+
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const undoBtn = document.getElementById('undoBtn');
+            prevBtn.disabled = !selectedWord || validPositions.length <= 1;
+            nextBtn.disabled = !selectedWord || validPositions.length <= 1;
+            undoBtn.disabled = historyStack.length === 0;
+
+            const isComplete = checkWinCondition();
+            if (isComplete) {
+                showCelebration();
+            }
+        }
+
+        function showCelebration() {
+            createConfetti();
+            const modal = document.getElementById('celebrationModal');
+            modal.style.display = 'flex';
+        }
+
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('celebrationModal').style.display = 'none';
+            document.querySelectorAll('.confetti').forEach(c => c.remove());
+        }
+
+        function selectWord(word) {
+            selectedWord = word;
+            validPositions = findValidPositions(word);
+            previewStartCol = validPositions.length > 0 ? validPositions[0] : 0;
+            updatePreview();
+        }
+
+        function confirmDrop() {
+            if (previewPositions.length === 0) return;
+
+            const row = previewPositions[0].row;
+            
+            historyStack.push({
+                grid: grid.map(col => [...col]),
+                placedWords: [...placedWords],
+                placedWordRows: [...placedWordRows]
+            });
+            
+            for (const pos of previewPositions) {
+                grid[pos.col][pos.row] = pos.letter;
+            }
+
+            placedWords.push(selectedWord);
+            placedWordRows.push({ word: selectedWord, row: row });
+            
+            selectedWord = null;
+            previewStartCol = 0;
+            validPositions = [];
+            previewPositions = [];
+
+            render();
+        }
+
+        function findLowestEmptyRow(col) {
+            const height = getColHeight(col);
+            for (let r = 0; r < height; r++) {
+                if (grid[col][r] === null) {
+                    return r;
+                }
+            }
+            return -1;
+        }
+
+        function checkWinCondition() {
+            all_correct = true;
+            for (let r = 0; r < MAX_ROWS; r++) {
+		if (!isRowCorrect(r)) {
+		    all_correct = false;
+		    break;
+		}
+	    }
+	    return all_correct;
+        }
+
+        function resetGame() {
+            initGame();
+        }
+
+        function undoMove() {
+            if (historyStack.length === 0) return;
+            
+            const lastState = historyStack.pop();
+            grid = lastState.grid;
+            placedWords = lastState.placedWords;
+            placedWordRows = lastState.placedWordRows;
+            
+            selectedWord = null;
+            previewStartCol = 0;
+            validPositions = [];
+            previewPositions = [];
+            
+            render();
+        }
+
+        initGame();
+    </script>
+    <div id="celebrationModal">
+        <div class="modal-content">
+            <h2>Puzzle Complete!</h2>
+            <p>Happy birthday, Amy!</p>
+            <p>Wish I could be there irl to celebrate, but I hope this stacks was good in my place.</p>
+            <p>So much fun to have gotten closer this year :)</p>
+            <p>Happy 20th!</p>
+            <button class="modal-close-btn" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+</body>
+</html>
